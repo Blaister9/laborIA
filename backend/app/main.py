@@ -21,8 +21,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from pathlib import Path
+
 from app.agent.orchestrator import Orchestrator
-from app.api.routes import chat, documents, health
+from app.agent.prompts.loader import init_prompt_store
+from app.api.routes import admin, chat, documents, health
 from app.config import settings
 from app.llm.claude_client import ClaudeClient
 from app.rag.embeddings import EmbeddingModel
@@ -40,6 +43,15 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     """Inicializa y libera recursos al arrancar/detener la app."""
     logger.info("=== LaborIA Backend arrancando ===")
+
+    # 0. Prompts desde archivos .md (antes de todo — rápido, sin GPU)
+    prompts_dir = Path(settings.prompts_dir)
+    logger.info("Cargando prompts desde %s...", prompts_dir)
+    store = init_prompt_store(prompts_dir)
+    logger.info(
+        "Prompts listos — system_prompt=%d chars, tools overridden=%s",
+        len(store.system_prompt), store.build_tools([]),
+    )
 
     # 1. Modelos de ML (costosos — cargar una sola vez)
     logger.info("Cargando EmbeddingModel...")
@@ -108,3 +120,4 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(chat.router)
 app.include_router(documents.router)
+app.include_router(admin.router)

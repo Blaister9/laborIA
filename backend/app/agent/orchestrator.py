@@ -20,7 +20,7 @@ import logging
 from typing import AsyncGenerator
 
 from app.agent.models import ArticleSource, ChatEvent
-from app.agent.prompts.system_prompt import SYSTEM_PROMPT
+from app.agent.prompts.loader import get_prompt_store
 from app.agent.prompts.tool_descriptions import TOOLS
 from app.agent.tools.calculate_liquidation import run_calculate_liquidation
 from app.agent.tools.check_deadlines import run_check_deadlines
@@ -50,12 +50,18 @@ class Orchestrator:
         tools_were_called = False
 
         # ── Fase 1: loop de tool use (no-streaming) ───────────────────────────
+        # Obtener prompt y tools del store en cada request — así los cambios
+        # de /admin/reload-prompts se aplican sin reiniciar el servidor.
+        store = get_prompt_store()
+        system_prompt = store.system_prompt
+        tools = store.build_tools(TOOLS)
+
         for iteration in range(MAX_TOOL_ITERATIONS):
             try:
                 response = await self.claude.create(
-                    system=SYSTEM_PROMPT,
+                    system=system_prompt,
                     messages=messages,
-                    tools=TOOLS,
+                    tools=tools,
                 )
             except Exception as exc:
                 logger.exception("Error llamando a Claude (iter %d)", iteration)
@@ -104,9 +110,9 @@ class Orchestrator:
         # Claude no puede procesar el contexto y devuelve texto vacío.
         try:
             async with self.claude.stream(
-                system=SYSTEM_PROMPT,
+                system=system_prompt,
                 messages=messages,
-                tools=TOOLS,
+                tools=tools,
             ) as stream:
                 async for text_chunk in stream.text_stream:
                     yield _sse(ChatEvent(type="text", content=text_chunk))

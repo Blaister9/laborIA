@@ -64,6 +64,13 @@ COPY backend/ .
 COPY corpus/parsed/chunks.json /app/corpus/parsed/chunks.json
 ENV CHUNKS_PATH=/app/corpus/parsed/chunks.json
 
+# Prompts editables: los .md se montan aquí en producción.
+# En Docker Compose se puede montar como volumen para edición en caliente:
+#   volumes: ["./prompts:/prompts"]
+# Si no se monta, se usan los que están bakeados en la imagen.
+COPY prompts/ /prompts/
+ENV PROMPTS_DIR=/prompts
+
 # Puerto de la aplicación
 EXPOSE 8080
 

@@ -44,6 +44,16 @@ class Settings(BaseSettings):
     # ── Corpus ───────────────────────────────────────────────────────────────
     chunks_path: str = str(PROJECT_ROOT / "corpus" / "parsed" / "chunks.json")
 
+    # ── Admin ────────────────────────────────────────────────────────────────
+    # Token para el endpoint POST /admin/reload-prompts.
+    # Si está vacío, el endpoint queda deshabilitado (403).
+    admin_token: str = ""
+
+    # Directorio de archivos .md de prompts.
+    # En Docker: sobreescribir con PROMPTS_DIR=/prompts
+    # En dev: por defecto PROJECT_ROOT/prompts/
+    prompts_dir: str = str(PROJECT_ROOT / "prompts")
+
     # ── API ──────────────────────────────────────────────────────────────────
     api_cors_origins: list[str] = [
         "http://localhost:3000",

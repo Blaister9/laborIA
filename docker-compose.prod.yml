@@ -45,12 +45,18 @@ services:
       - "8080:8080"   # Nginx hace proxy desde :80/:443 → :8080
     env_file:
       - /etc/laboria/.env.prod   # Ruta en el VPS (no en el repo)
+    volumes:
+      # Montar prompts/ como volumen: edita los .md en el host y llama
+      # POST /admin/reload-prompts para que el backend los recargue sin rebuild.
+      - ./prompts:/prompts
     environment:
       # Qdrant apunta al servicio interno de Docker, no a localhost
       QDRANT_HOST: qdrant
       QDRANT_PORT: 6333
       # Chunk path bakeado en la imagen
       CHUNKS_PATH: /app/corpus/parsed/chunks.json
+      # Prompts desde volumen montado
+      PROMPTS_DIR: /prompts
     depends_on:
       qdrant:
         condition: service_healthy

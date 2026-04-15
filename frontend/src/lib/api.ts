@@ -2,16 +2,31 @@
 // En prod: VITE_API_URL=https://api.tudominio.com (sin trailing slash)
 const BASE = import.meta.env.VITE_API_URL ?? '/api'
 
+/**
+ * Headers base para todas las peticiones al backend.
+ *
+ * ngrok-skip-browser-warning: el plan gratuito de ngrok muestra una página
+ * de advertencia HTML antes de redirigir al backend real. Cualquier fetch
+ * sin este header recibe esa página en vez de la respuesta JSON/SSE.
+ * El valor puede ser cualquier string no vacío — usamos "true".
+ */
+function baseHeaders(extra?: Record<string, string>): Record<string, string> {
+  return {
+    'ngrok-skip-browser-warning': 'true',
+    ...extra,
+  }
+}
+
 export interface ChatPayload {
   query: string
   top_k?: number
 }
 
-/** Streaming fetch — yields raw SSE lines */
+/** Streaming fetch — yields raw SSE data lines */
 export async function* streamChat(payload: ChatPayload): AsyncGenerator<string> {
   const res = await fetch(`${BASE}/chat`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: baseHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify(payload),
   })
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -22,8 +37,10 @@ export async function* streamDocument(file: File, question: string): AsyncGenera
   const form = new FormData()
   form.append('file', file)
   form.append('question', question)
+  // No incluir Content-Type en FormData — el navegador lo pone con el boundary correcto
   const res = await fetch(`${BASE}/analyze-document`, {
     method: 'POST',
+    headers: baseHeaders(),
     body: form,
   })
   if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -50,6 +67,6 @@ async function* readSSE(res: Response): AsyncGenerator<string> {
 }
 
 export async function checkHealth() {
-  const res = await fetch(`${BASE}/health`)
+  const res = await fetch(`${BASE}/health`, { headers: baseHeaders() })
   return res.json()
 }
