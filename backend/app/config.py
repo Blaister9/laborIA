@@ -45,7 +45,13 @@ class Settings(BaseSettings):
     chunks_path: str = str(PROJECT_ROOT / "corpus" / "parsed" / "chunks.json")
 
     # ── API ──────────────────────────────────────────────────────────────────
-    api_cors_origins: list[str] = ["http://localhost:3000", "http://localhost:5173"]
+    api_cors_origins: list[str] = [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "https://laboriaia.netlify.app",
+    ]
+    # Regex para orígenes dinámicos (ngrok cambia de URL frecuentemente)
+    api_cors_origin_regex: str = r"https://.*\.ngrok-free\.dev"
 
 
 # Singleton global

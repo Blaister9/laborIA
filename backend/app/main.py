@@ -95,6 +95,10 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.api_cors_origins,
+    # Wildcard para ngrok (URL cambia en cada sesión) y futuros dominios dinámicos.
+    # CORSMiddleware acepta allow_origin_regex junto con allow_origins — se aprueba
+    # si el origen está en la lista O coincide con el regex.
+    allow_origin_regex=settings.api_cors_origin_regex,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
