@@ -1,0 +1,49 @@
+# Control de versiones
+.git
+.gitignore
+
+# Frontend (no va en la imagen del backend)
+frontend/
+
+# Entornos virtuales Python
+.venv
+venv
+__pycache__
+**/__pycache__
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Variables de entorno locales (se inyectan en runtime, no se bakean)
+.env
+backend/.env
+*.env.local
+
+# Corpus raw (solo necesitamos chunks.json, no los PDFs originales)
+corpus/raw/
+
+# Archivos de desarrollo
+*.md
+docs/
+scripts/
+notebooks/
+
+# Docker
+docker-compose.yml
+docker-compose.prod.yml
+Dockerfile
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

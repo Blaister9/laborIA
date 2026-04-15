@@ -1,0 +1,85 @@
+{
+  "_comment": "Tracking de artículos del CST modificados por la Ley 2466 de 2025.",
+  "_note": "Completar con los números exactos de artículos de la Ley 2466 después del parsing de ley_2466_articles.json. Los datos actuales son aproximados basados en el texto publicado.",
+  "_source": "Ley 2466 de 2025 — DIARIO OFICIAL No. 52.782 de 26 de junio de 2025",
+
+  "ley_2466_2025": {
+    "titulo": "Ley 2466 de 2025 — Por la cual se adoptan medidas para la formalización del empleo...",
+    "diario_oficial": "52.782",
+    "fecha_promulgacion": "2025-06-26",
+    "vigor_general": "2025-06-26",
+    "url_oficial": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=260676",
+
+    "modificaciones": {
+      "CST_161": {
+        "articulo_cst": 161,
+        "titulo_cst": "Duración máxima de la jornada ordinaria de trabajo",
+        "articulo_ley_2466": "Por determinar tras parsing",
+        "descripcion": "Reducción progresiva de la jornada laboral máxima a 42 horas semanales",
+        "implementacion": {
+          "2023-07-15": "47 horas",
+          "2024-07-15": "46 horas",
+          "2025-07-15": "44 horas",
+          "2026-07-15": "42 horas"
+        },
+        "effective_date": "2025-06-26",
+        "status": "vigente"
+      },
+      "CST_168": {
+        "articulo_cst": 168,
+        "titulo_cst": "Trabajo nocturno, dominical y festivo — recargos",
+        "articulo_ley_2466": "Por determinar tras parsing",
+        "descripcion": "Modificación de los porcentajes de recargo por trabajo nocturno",
+        "effective_date": "2025-06-26",
+        "status": "vigente"
+      },
+      "CST_179": {
+        "articulo_cst": 179,
+        "titulo_cst": "Remuneración del trabajo dominical y festivo",
+        "articulo_ley_2466": "Por determinar tras parsing",
+        "descripcion": "Aumento gradual del recargo dominical hasta 100%",
+        "implementacion_recargo": {
+          "hasta_2025-06-25": "75% sobre el salario ordinario",
+          "2025-06-26": "80%",
+          "2026-07-01": "90%",
+          "2027-07-01": "100%"
+        },
+        "effective_date": "2025-06-26",
+        "status": "vigente",
+        "nota": "ARTÍCULO MUY CONSULTADO — el recargo cambia en fechas específicas"
+      },
+      "CST_180": {
+        "articulo_cst": 180,
+        "titulo_cst": "Descanso compensatorio",
+        "articulo_ley_2466": "Por determinar tras parsing",
+        "descripcion": "Modificación del descanso compensatorio por trabajo dominical",
+        "effective_date": "2025-06-26",
+        "status": "vigente"
+      },
+      "CST_236": {
+        "articulo_cst": 236,
+        "titulo_cst": "Descanso remunerado en la época de parto",
+        "articulo_ley_2466": "Por determinar tras parsing",
+        "descripcion": "Ampliación y modificación de la licencia de maternidad",
+        "effective_date": "2025-06-26",
+        "status": "vigente"
+      }
+    },
+
+    "nuevos_articulos": {
+      "_note": "Artículos nuevos introducidos directamente por la Ley 2466 (no modificaciones al CST)",
+      "ejemplos": [
+        "Teletrabajo ampliado",
+        "Trabajo en plataformas digitales",
+        "Estabilidad laboral reforzada expandida"
+      ]
+    },
+
+    "TODO": [
+      "Completar números exactos de artículos de la Ley 2466 tras parsear ley_2466_articles.json",
+      "Verificar fechas de implementación escalonada contra el texto oficial",
+      "Agregar todos los artículos del CST modificados (pueden ser más de los listados aquí)",
+      "Cruzar con la tabla de modificaciones del CST en secretariasenado.gov.co"
+    ]
+  }
+}

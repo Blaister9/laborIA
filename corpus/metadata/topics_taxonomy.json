@@ -1,0 +1,151 @@
+{
+  "_comment": "Taxonomía de temas del derecho laboral colombiano para el corpus de LaborIA.",
+  "_version": "1.0",
+  "_note": "Los topics se asignan automáticamente en chunk_corpus.py basándose en rangos de artículos. Este archivo es la referencia canónica para validación y UI.",
+
+  "topics": {
+    "principios": {
+      "label": "Principios del derecho laboral",
+      "description": "Principios generales: in dubio pro operario, favorabilidad, primacía de la realidad, irrenunciabilidad",
+      "cst_articles": "1-21",
+      "keywords": ["favorabilidad", "primacía realidad", "irrenunciabilidad", "principios"]
+    },
+    "contrato_trabajo": {
+      "label": "Contrato de trabajo",
+      "description": "Definición, elementos esenciales, modalidades, formalidades del contrato laboral",
+      "cst_articles": "22-75",
+      "keywords": ["contrato", "vinculación", "relación laboral", "empleador", "trabajador"]
+    },
+    "terminación_contrato": {
+      "label": "Terminación del contrato",
+      "description": "Causales de terminación, justa causa, despido, liquidación, preaviso, indemnización",
+      "cst_articles": "61-71",
+      "keywords": ["despido", "terminación", "justa causa", "sin justa causa", "preaviso", "indemnización"]
+    },
+    "periodo_prueba": {
+      "label": "Período de prueba",
+      "description": "Duración máxima, derechos durante el período de prueba, prórroga",
+      "cst_articles": "76-82",
+      "keywords": ["prueba", "período de prueba", "noventa días", "2 meses"]
+    },
+    "salario": {
+      "label": "Salario",
+      "description": "Qué constituye salario, pagos no salariales, salario mínimo, modalidades de pago",
+      "cst_articles": "127-156",
+      "keywords": ["salario", "remuneración", "sueldo", "pago", "bonificación", "constitución salario"]
+    },
+    "jornada_trabajo": {
+      "label": "Jornada de trabajo",
+      "description": "Jornada máxima legal, horas extras, trabajo nocturno, recargos — MODIFICADO LEY 2466/2025",
+      "cst_articles": "158-171",
+      "keywords": ["jornada", "horas", "horario", "extras", "nocturno", "diurno", "turnos"],
+      "modified_by_reform": true
+    },
+    "dominical": {
+      "label": "Trabajo dominical y festivos",
+      "description": "Recargo dominical, festivos, descanso compensatorio — MODIFICADO LEY 2466/2025",
+      "cst_articles": "172-180",
+      "keywords": ["domingo", "dominical", "festivo", "recargo", "descanso compensatorio"],
+      "modified_by_reform": true,
+      "reform_note": "El recargo dominical sube progresivamente: 80% en 2025 → 100% en julio 2027"
+    },
+    "vacaciones": {
+      "label": "Vacaciones",
+      "description": "Días de vacaciones, forma de pago, compensación en dinero, acumulación",
+      "cst_articles": "186-192",
+      "keywords": ["vacaciones", "descanso remunerado", "días hábiles", "compensación"]
+    },
+    "maternidad": {
+      "label": "Protección a la maternidad",
+      "description": "Licencia de maternidad, fuero de maternidad, lactancia, protección embarazo",
+      "cst_articles": "236-245",
+      "keywords": ["maternidad", "embarazo", "licencia", "lactancia", "fuero maternidad", "estabilidad"]
+    },
+    "paternidad": {
+      "label": "Licencia de paternidad",
+      "description": "Días de licencia de paternidad — ampliada por Ley 2466/2025",
+      "cst_articles": "236A",
+      "keywords": ["paternidad", "licencia paternidad", "padre"],
+      "modified_by_reform": true
+    },
+    "cesantías": {
+      "label": "Cesantías",
+      "description": "Auxilio de cesantía, intereses sobre cesantías, retiro de cesantías, fondo",
+      "cst_articles": "249-258",
+      "keywords": ["cesantías", "auxilio cesantía", "liquidación", "fondo de cesantías", "intereses"]
+    },
+    "prima_servicios": {
+      "label": "Prima de servicios",
+      "description": "Prima legal de servicios, cuándo y cómo se liquida",
+      "cst_articles": "306-308",
+      "keywords": ["prima", "prima de servicios", "prima legal", "semestral"]
+    },
+    "pensión": {
+      "label": "Pensión de jubilación",
+      "description": "Pensión de vejez, jubilación patronal, requisitos, monto",
+      "cst_articles": "259-272",
+      "keywords": ["pensión", "jubilación", "vejez", "retiro"]
+    },
+    "accidente_trabajo": {
+      "label": "Accidente de trabajo y enfermedad laboral",
+      "description": "Definición, prestaciones económicas y asistenciales, ARL",
+      "cst_articles": "199-234",
+      "keywords": ["accidente", "accidente de trabajo", "enfermedad laboral", "ARL", "riesgos laborales"]
+    },
+    "sindicatos": {
+      "label": "Sindicatos y derecho colectivo",
+      "description": "Constitución de sindicatos, afiliación, fuero sindical, negociación colectiva",
+      "cst_articles": "353-452",
+      "keywords": ["sindicato", "fuero sindical", "negociación colectiva", "convención", "huelga"]
+    },
+    "huelga": {
+      "label": "Huelga",
+      "description": "Procedimiento de huelga, legalidad, servicios esenciales",
+      "cst_articles": "429-452",
+      "keywords": ["huelga", "cese de actividades", "conflicto colectivo"]
+    },
+    "prescripción": {
+      "label": "Prescripción y caducidad",
+      "description": "Términos de prescripción de acciones laborales (3 años), caducidad",
+      "cst_articles": "488-489",
+      "keywords": ["prescripción", "caducidad", "término", "3 años", "tiempo"]
+    },
+    "reglamento_interno": {
+      "label": "Reglamento interno de trabajo",
+      "description": "Obligatoriedad, contenido, sanciones disciplinarias, proceso disciplinario",
+      "cst_articles": "104-126",
+      "keywords": ["reglamento", "disciplina", "sanciones", "proceso disciplinario", "llamado atención"]
+    },
+    "acoso_laboral": {
+      "label": "Acoso laboral",
+      "description": "Definición, modalidades, mecanismos de protección — Ley 1010/2006",
+      "cst_articles": null,
+      "source": "Ley_1010",
+      "keywords": ["acoso", "hostigamiento", "maltrato", "abuso", "Ley 1010"]
+    },
+    "trabajo_remoto": {
+      "label": "Teletrabajo y trabajo en casa",
+      "description": "Modalidades de trabajo remoto, derechos, obligaciones del empleador",
+      "cst_articles": null,
+      "source": "Ley_1221_2008",
+      "keywords": ["teletrabajo", "trabajo remoto", "trabajo en casa", "home office"]
+    }
+  },
+
+  "reform_ley_2466_2025": {
+    "description": "Resumen de las modificaciones de la Ley 2466/2025 al CST",
+    "vigor_general": "2025-06-26",
+    "staged_implementation": {
+      "recargo_dominical": {
+        "2025-06-26": "75% → 80% del salario ordinario",
+        "2026-07-01": "80% → 90%",
+        "2027-07-01": "90% → 100%"
+      },
+      "jornada_laboral": {
+        "2025-06-26": "46 horas semanales (ya vigente desde 2024 en algunos casos)",
+        "2026-07-01": "44 horas semanales",
+        "2025-06-26_note": "La reducción a 42h se completa en julio 2026"
+      }
+    }
+  }
+}

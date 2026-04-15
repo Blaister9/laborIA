@@ -1,0 +1,99 @@
+version: "3.9"
+
+# ─────────────────────────────────────────────────────────────────────────────
+# LaborIA — Docker Compose PRODUCCIÓN
+#
+# Uso:
+#   docker compose -f docker-compose.prod.yml up -d
+#
+# Variables requeridas en /etc/laboria/.env.prod (o en el entorno del host):
+#   ANTHROPIC_API_KEY
+#   API_CORS_ORIGINS
+#   (ver .env.production.example para la lista completa)
+# ─────────────────────────────────────────────────────────────────────────────
+
+services:
+
+  # ── Qdrant: base de datos vectorial ────────────────────────────────────────
+  qdrant:
+    image: qdrant/qdrant:v1.13.6
+    container_name: laboria_qdrant_prod
+    # No exponer al exterior — solo accesible desde la red interna Docker
+    expose:
+      - "6333"
+      - "6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+    environment:
+      QDRANT__SERVICE__GRPC_PORT: 6334
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:6333/readyz || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  # ── FastAPI backend ─────────────────────────────────────────────────────────
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: laboria-backend:latest
+    container_name: laboria_backend_prod
+    ports:
+      - "8080:8080"   # Nginx hace proxy desde :80/:443 → :8080
+    env_file:
+      - /etc/laboria/.env.prod   # Ruta en el VPS (no en el repo)
+    environment:
+      # Qdrant apunta al servicio interno de Docker, no a localhost
+      QDRANT_HOST: qdrant
+      QDRANT_PORT: 6333
+      # Chunk path bakeado en la imagen
+      CHUNKS_PATH: /app/corpus/parsed/chunks.json
+    depends_on:
+      qdrant:
+        condition: service_healthy
+    restart: unless-stopped
+    # Limitar recursos en CX21 (4 GB RAM): reservar 1.8 GB, limitar a 3 GB
+    deploy:
+      resources:
+        limits:
+          memory: 3G
+        reservations:
+          memory: 1800M
+
+  # ── Nginx: reverse proxy + TLS termination ──────────────────────────────────
+  nginx:
+    image: nginx:1.25-alpine
+    container_name: laboria_nginx_prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/certs:/etc/nginx/certs:ro         # Certs de Let's Encrypt
+      - certbot_webroot:/var/www/certbot:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+  # ── Certbot: renovación automática TLS ─────────────────────────────────────
+  certbot:
+    image: certbot/certbot:latest
+    container_name: laboria_certbot
+    volumes:
+      - ./nginx/certs:/etc/letsencrypt
+      - certbot_webroot:/var/www/certbot
+    # Renovar cada 12 horas; Certbot solo actúa si faltan < 30 días
+    entrypoint: >
+      /bin/sh -c "trap exit TERM;
+      while :; do
+        certbot renew --webroot -w /var/www/certbot --quiet;
+        sleep 12h & wait $${!};
+      done"
+    restart: unless-stopped
+
+volumes:
+  qdrant_data:
+  certbot_webroot:

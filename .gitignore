@@ -1,0 +1,48 @@
+# Environment — NUNCA subir al repo
+.env
+.env.*
+!.env.production.example
+*.env.local
+backend/.env
+nginx/certs/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Corpus raw files (descargas locales, no van al repo)
+corpus/raw/
+corpus/parsed/
+
+# Node
+node_modules/
+.next/
+dist/
+
+# Docker volumes y datos locales de Qdrant
+data/
+qdrant_local/
+
+# Claude Code (configuración local del IDE)
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
