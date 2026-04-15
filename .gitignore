@@ -18,9 +18,11 @@ build/
 .mypy_cache/
 .ruff_cache/
 
-# Corpus raw files (descargas locales, no van al repo)
+# Corpus raw files y archivos intermedios (regenerables, no van al repo)
 corpus/raw/
-corpus/parsed/
+# Ignorar contenidos de parsed/* pero NO chunks.json (lo necesitan Dockerfile y BM25)
+corpus/parsed/*
+!corpus/parsed/chunks.json
 
 # Node
 node_modules/
